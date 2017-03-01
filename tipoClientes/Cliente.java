@@ -10,8 +10,7 @@ public abstract class Cliente {
 	Direccion direccion ;
 	
 	//constructor
-	public Cliente(){
-		
+	public Cliente(){	
 	}	
 
 	public Cliente(String nombre,char NIF, String correo, LocalDateTime fechaAlta,float tarifa, Direccion direccion){
@@ -40,5 +39,11 @@ public abstract class Cliente {
 
 	public float getTarifa() {
 		return tarifa;
+	}
+	
+	@Override
+	public String toString() {
+		return "Cliente [getNombre()=" + getNombre() + ", getNIF()=" + getNIF() + ", getCorreo()=" + getCorreo()
+				+ ", getFechaAlta()=" + getFechaAlta() + ", getTarifa()=" + getTarifa() + "]";
 	}
 }
