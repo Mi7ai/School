@@ -9,7 +9,10 @@ public class Factura implements Fecha{
 	private LocalDateTime periodoFacturacion;
 	private float importe;
 	
-	public Factura(Tarifa tarifa, int codigoFactura, LocalDateTime fechaEmision, LocalDateTime periodoFacturacion,float importe) {
+	public Factura(){
+		
+	}
+	public Factura(int codigoFactura,Tarifa tarifa, LocalDateTime fechaEmision, LocalDateTime periodoFacturacion,float importe) {
 		super();
 		this.tarifa = tarifa;
 		this.codigoFactura = codigoFactura;
@@ -32,6 +35,10 @@ public class Factura implements Fecha{
 
 	public int getCodigoFactura() {
 		return codigoFactura;
+	}
+
+	public void setCodigoFactura(int codigoFactura) {
+		this.codigoFactura = codigoFactura;
 	}
 
 	@Override

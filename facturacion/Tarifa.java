@@ -3,11 +3,11 @@ package facturacion;
 public class Tarifa {
 	private float precioTarifa;
 	
-	public Tarifa(float tarifa){
-		this.precioTarifa = tarifa;
+	public Tarifa(float precioTarifa){
+		this.precioTarifa = precioTarifa;
 	}
 	
-	float getTarifa(){
+	public float getPrecioMinuto(){
 		return precioTarifa;
 	}
 

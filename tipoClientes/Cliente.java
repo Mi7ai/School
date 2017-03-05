@@ -1,19 +1,21 @@
 package tipoClientes;
 import java.time.LocalDateTime;
 
+import facturacion.Tarifa;
+
 public abstract class Cliente {
 	private String nombre;	
-	private char NIF;	
+	private String NIF;	
 	private String correo;
 	private LocalDateTime fechaAlta;
-	private float tarifa;
+	private Tarifa tarifa;
 	Direccion direccion ;
 	
 	//constructor
 	public Cliente(){	
 	}	
 
-	public Cliente(String nombre,char NIF, String correo, LocalDateTime fechaAlta,float tarifa, Direccion direccion){
+	public Cliente(String nombre,String NIF, String correo, LocalDateTime fechaAlta,Tarifa tarifa, Direccion direccion){
 		this.nombre = nombre;
 		this.NIF = NIF;
 		this.correo = correo;
@@ -21,11 +23,13 @@ public abstract class Cliente {
 		this.tarifa = tarifa;
 		this.direccion = direccion;
 	}
+	
+
 	public String getNombre() {
 		return nombre;
 	}	
 	
-	public char getNIF() {
+	public String getNIF() {
 		return NIF;
 	}
 
@@ -37,8 +41,12 @@ public abstract class Cliente {
 		return fechaAlta;
 	}
 
-	public float getTarifa() {
+	public Tarifa getTarifa() {
 		return tarifa;
+	}
+	
+	public String getClienteNoExistente(){
+		return "No hay nigun cliente con el NIF proporcionado.";
 	}
 	
 	@Override
