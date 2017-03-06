@@ -6,11 +6,11 @@ import facturacion.Factura;
 import tipoClientes.Cliente;
 
 public interface InterfaceClientes {
-	public  boolean existeCliente(char NIF);
+	public  boolean existeCliente(String NIF);
 	public  boolean altaCliente(Cliente Cliente);
-	public  String bajaCliente(char NIF);
-	public  Cliente getDatosCliente(char NIF);
-	public  String cambiarTarifa(char NIF, float precioTarifa);
+	public  String bajaCliente(String NIF);
+	public  Cliente getDatosCliente(String NIF);
+	public  String cambiarTarifa(String NIF, float precioTarifa);
 	public  Collection<Cliente> getListadoClientes();
 	
 }

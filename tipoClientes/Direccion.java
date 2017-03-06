@@ -5,6 +5,9 @@ public class Direccion {
 	private String provincia;
 	private String poblacion;
 	
+	public Direccion(){
+		
+	}
 	public Direccion(int CP, String provincia, String poblacion){
 		this.CP = CP;
 		this.provincia = provincia;
@@ -23,5 +26,9 @@ public class Direccion {
 		return poblacion;
 	}
 	
+	@Override
+	public String toString() {
+		return "Direccion [CP=" + CP + ", provincia=" + provincia + ", poblacion=" + poblacion + "]";
+	}
 	
 }

@@ -6,14 +6,14 @@ import java.util.HashMap;
 import tipoClientes.Cliente;
 
 public class OperacionesClienteParticular implements InterfaceClientes{
-	private HashMap<Character, Cliente> clientesParticulares;
+	private HashMap<String, Cliente> clientesParticulares;
 	
 	public OperacionesClienteParticular() {
 		// TODO Auto-generated constructor stub
 		clientesParticulares = new HashMap<>();
 	}
 	@Override
-	public boolean existeCliente(char NIF) {
+	public boolean existeCliente(String NIF) {
 		// TODO Auto-generated method stub
 		if (clientesParticulares.containsKey(NIF)) {
 			return true;
@@ -33,7 +33,7 @@ public class OperacionesClienteParticular implements InterfaceClientes{
 	}
 
 	@Override
-	public String bajaCliente(char NIF) {
+	public String bajaCliente(String NIF) {
 		// TODO Auto-generated method stub
 		if (clientesParticulares.containsKey(NIF)) {
 			clientesParticulares.remove(NIF);			
@@ -43,7 +43,7 @@ public class OperacionesClienteParticular implements InterfaceClientes{
 	}
 
 	@Override
-	public Cliente getDatosCliente(char NIF) {
+	public Cliente getDatosCliente(String NIF) {
 		// TODO Auto-generated method stub
 		if (clientesParticulares.containsKey(NIF)) {
 			return clientesParticulares.get(NIF);
@@ -54,11 +54,10 @@ public class OperacionesClienteParticular implements InterfaceClientes{
 	@Override
 	public Collection<Cliente> getListadoClientes() {
 		// TODO Auto-generated method stub
-		return clientesParticulares.values();
-		
+		return clientesParticulares.values();	
 	}
 	@Override
-	public String cambiarTarifa(char NIF, float precioTarifa) {
+	public String cambiarTarifa(String NIF, float precioTarifa) {
 		// TODO Auto-generated method stub
 		if (clientesParticulares.containsKey(NIF)) {
 			clientesParticulares.get(NIF).getTarifa().setPrecioTarifa(precioTarifa);;

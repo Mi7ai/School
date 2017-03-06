@@ -6,14 +6,14 @@ import java.util.HashMap;
 import tipoClientes.Cliente;
 
 public class OperacionesClienteEmpresa implements InterfaceClientes{
-	private HashMap<Character, Cliente> clientesEmpresas;
+	private HashMap<String, Cliente> clientesEmpresas;
 	
 	public OperacionesClienteEmpresa() {
 		 clientesEmpresas = new HashMap<>();
 	}
 
 	@Override
-	public boolean existeCliente(char NIF) {
+	public boolean existeCliente(String NIF) {
 		// TODO Auto-generated method stub
 		if (clientesEmpresas.containsKey(NIF)) {
 			return true;
@@ -32,7 +32,7 @@ public class OperacionesClienteEmpresa implements InterfaceClientes{
 	}
 
 	@Override
-	public String bajaCliente(char NIF) {
+	public String bajaCliente(String NIF) {
 		// TODO Auto-generated method stub
 		if (clientesEmpresas.containsKey(NIF)) {
 			clientesEmpresas.remove(NIF);			
@@ -43,7 +43,7 @@ public class OperacionesClienteEmpresa implements InterfaceClientes{
 	}
 
 	@Override
-	public Cliente getDatosCliente(char NIF) {
+	public Cliente getDatosCliente(String NIF) {
 		// TODO Auto-generated method stub
 		if (clientesEmpresas.containsKey(NIF)) {
 			return clientesEmpresas.get(NIF);
@@ -52,7 +52,7 @@ public class OperacionesClienteEmpresa implements InterfaceClientes{
 	}
 
 	@Override
-	public String cambiarTarifa(char NIF, float precioTarifa) {
+	public String cambiarTarifa(String NIF, float precioTarifa) {
 		// TODO Auto-generated method stub
 		if (clientesEmpresas.containsKey(NIF)) {
 			clientesEmpresas.get(NIF).getTarifa().setPrecioTarifa(precioTarifa);;

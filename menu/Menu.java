@@ -1,8 +1,14 @@
 package menu;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
+import facturacion.Factura;
+import facturacion.Llamada;
 import facturacion.Tarifa;
 import operacionesApp.OperacionesClienteEmpresa;
 import operacionesApp.OperacionesClienteParticular;
@@ -22,6 +28,7 @@ public class Menu {
 		OperacionesClienteEmpresa clienteEmpresa = new OperacionesClienteEmpresa();
 		OperacionesClienteParticular clienteParticular = new OperacionesClienteParticular();
 		OperacionesLlamadas clienteLlamadas = new OperacionesLlamadas();
+		OperacionesFacturas clienteFacturas = new OperacionesFacturas();
 		
 		
 		do {				
@@ -48,12 +55,12 @@ public class Menu {
 				 
 				switch (option2) {
 					case 1:
-						System.out.println("Alta Cliente: --- Introduce Cliente ---");
+						System.out.println("--- Alta Cliente ---");
 						System.out.println("---------------------------------------");
-						System.out.println("Alta Cliente: - Cliente Particular - ");
-						System.out.println("Alta Cliente: - Cliente Empresa - ");
+						System.out.println("1 ---> Alta Cliente: - Cliente Particular - ");
+						System.out.println("2 ---> Alta Cliente: - Cliente Empresa - ");
 						option3 = sc.nextInt();
-						switch (option3) {
+							switch (option3) {
 							case 1:
 								clienteParticular.altaCliente(crearCliente(1));
 								break;
@@ -65,18 +72,76 @@ public class Menu {
 							}
 						break;
 					case 2:
-						System.out.println("Baja Cliente: --- Introduce NIF Cliente ---");
+						System.out.println("--- Baja Cliente ---");
+						System.out.println("---------------------------------------");
+						System.out.println("1 --> Cliente Particular ");
+						System.out.println("2 --> Cliente Empresa ");
+						option3 = sc.nextInt();
+							switch (option3) {
+							case 1:
+								clienteParticular.bajaCliente(crearNIFCliente());
+								break;
+							case 2:
+								clienteEmpresa.bajaCliente(crearNIFCliente());
+								break;
+							default:
+								break;
+							}
 						break;
 					case 3:
-						System.out.println("Cambio Tarifa: --- Introduce NIF Cliente---");
+						System.out.println("--- Cambio Tarifa ---");
+						System.out.println("---------------------------------------");
+						System.out.println("1 --> Cliente Particular ");
+						System.out.println("2 --> Cliente Empresa ");
+						option3 = sc.nextInt();
+							switch (option3) {
+							case 1:
+								clienteParticular.cambiarTarifa(crearNIFCliente(),crearTarifa());
+								break;
+							case 2:
+								clienteEmpresa.cambiarTarifa(crearNIFCliente(),crearTarifa());
+								break;
+							default:
+								break;
+							}
 						break;
 					case 4:
-						System.out.println("Datos Cliente: --- Introduce NIF Cliente---");
-		
+						System.out.println(" --- Datos Cliente ---");
+						System.out.println("1 --> Cliente Particular ");
+						System.out.println("2 --> Cliente Empresa ");
+						option3 = sc.nextInt();
+							switch (option3) {
+							case 1:
+								clienteParticular.getDatosCliente((crearNIFCliente()));
+								break;
+							case 2:
+								clienteEmpresa.getDatosCliente((crearNIFCliente()));
+								break;
+							default:
+								break;
+							}
 						break;
 					case 5:
 						System.out.println("--- Listado Clientes ---");
-		
+						System.out.println("1 --> Cliente Particular ");
+						System.out.println("2 --> Cliente Empresa ");
+						option3 = sc.nextInt();
+							switch (option3) {
+							case 1:
+								for (Cliente particular : clienteParticular.getListadoClientes()) {
+									System.out.println(particular+"\n");
+								}
+								
+								break;
+							case 2:
+								for (Cliente empresa : clienteEmpresa.getListadoClientes()) {
+									System.out.println(empresa+"\n");
+								}
+								
+								break;
+							default:
+								break;
+							}
 						break;
 					
 					default:
@@ -96,14 +161,25 @@ public class Menu {
 					option2 = sc.nextInt();
 					switch (option2) {
 						case 1:
-							System.out.println("Emision Factura: --- Cliente, llamada, Factura ---");
-							
+							System.out.println("--- Emision Factura ---");
+							if (detectarTipoCliente(clienteParticular, clienteEmpresa) == 1) {//particular
+								
+							}else if (detectarTipoCliente(clienteParticular, clienteEmpresa) == 2) {//empresa
+								
+							}else{
+								System.out.println("Cliente inexistente!");
+							}
 							break;
 						case 2:
-							System.out.println("Recuperando Datos: --- Introduce Codigo Factura ---");
+							System.out.println("--- Recuperando Datos Factura a partir de su Codigo ---");
+							clienteFacturas.getDatosFactura(crearCodigoFactura());
 							break;
 						case 3:
-							System.out.println("Recuperando Facturas: --- Introduce NIF Cliente---");
+							System.out.println("--- Recuperando Facturas Cliente ---");							 
+							for ( Factura factura : clienteFacturas.getFacturasCliente(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)))) {
+								 System.out.println(factura+"\n");
+							}
+							 
 							break;
 						default:
 							  	
@@ -121,10 +197,18 @@ public class Menu {
 				option2 = sc.nextInt();
 				switch (option2) {
 					case 1:
-						System.out.println("Alta Llamada: --- Introduce NIF, llamada");
+						System.out.println("--- Alta Llamada ---");
+						clienteLlamadas.altaLlamada(crearNIFCliente(), crearLlamada());
 						break;
 					case 2:
-						System.out.println("Lista Llamada: --- Introduce NIF");
+						System.out.println("--- Lista Llamada ---");//devuelve linkedlist
+						LinkedList<Llamada> l =  clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
+						System.out.println(l.size());
+						for (Llamada llamada : l) {
+							System.out.println(llamada.toString());
+						}
+						System.out.println(clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF()));
+						System.out.println(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
 						break;
 					default:
 						break;
@@ -154,8 +238,53 @@ public class Menu {
 			nuevoCliente = new Empresa("Mihai", "X9457019V", "email", LocalDateTime.now(), nuevaTarifa, nuevaDireccion);
 		}
 		
-		return nuevoCliente;
+		return nuevoCliente;		
+	}
+	
+	private static  int detectarTipoCliente(OperacionesClienteParticular clienteParticular, OperacionesClienteEmpresa clienteEmpresa){
+		int tipo = 0;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Introduce NIF cliente: ");		
+		String dniCliente = sc.nextLine();
+		if (clienteParticular.existeCliente(dniCliente)) {//significa que el dni del cliente es particular
+			tipo = 1;
+		}
+		if (clienteEmpresa.existeCliente(dniCliente)) {
+			tipo = 2;
+		}
+		return tipo;
 		
 	}
+	
+	private static String crearNIFCliente(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Introduce NIF cliente: ");		
+		return  sc.nextLine();
+	}
 
+	private static float crearTarifa(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Introduce tarifa: ");		
+		return  sc.nextFloat();
+	}
+	
+	private static int crearCodigoFactura(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Introduce Codigo Factura: ");		
+		return  sc.nextInt();
+	}
+	
+	private static Llamada crearLlamada(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Introduce numero telefono: ");
+		int telefono = sc.nextInt();
+		
+        System.out.println("Introduce la duración: ");
+        int duracion = sc.nextInt();
+        
+        LocalDateTime fecha = LocalDateTime.now();
+        return new Llamada(telefono, fecha, duracion);
+		 
+
+	}
 }

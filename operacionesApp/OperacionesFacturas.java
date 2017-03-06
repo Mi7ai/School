@@ -12,7 +12,7 @@ public class OperacionesFacturas {
 	private HashMap<String, HashMap<Integer,Factura>> facturas; 
 	private int generadorCodigoFacturas;
 	
-	public OperacionesFacturas(Factura factura) {
+	public OperacionesFacturas() {
 		 facturas = new HashMap<>();	
 		generadorCodigoFacturas = 2;
 	}
@@ -21,7 +21,7 @@ public class OperacionesFacturas {
 		//recorrer cada llamada
 		float importe = 0;
 		for (Llamada llamada : llamadas.listarLlamada(cliente.getNIF())) {
-			 importe = llamada.getDuracion()*cliente.getTarifa().getPrecioMinuto();
+			 importe += llamada.getDuracion()*cliente.getTarifa().getPrecioMinuto();
 		}
 		
 		Factura nuevaFactura = new Factura(generadorCodigoFacturas+2, factura.getTarifa(), factura.getFecha(), factura.getPeriodoFacturacion(), importe);
@@ -47,7 +47,10 @@ public class OperacionesFacturas {
 		if (facturas.containsKey(cliente.getNIF())) {
 			return facturas.get(cliente.getNIF()).values();
 		}
-		return null;
-		
+		return null;		
+	}
+	
+	public Collection<HashMap<Integer, Factura>> getDatosFacturas(){
+		return facturas.values();
 	}
 }

@@ -46,7 +46,7 @@ public abstract class Cliente {
 	}
 	
 	public String getClienteNoExistente(){
-		return "No hay nigun cliente con el NIF proporcionado.";
+		return "No hay ningun cliente con el NIF proporcionado.";
 	}
 	
 	@Override

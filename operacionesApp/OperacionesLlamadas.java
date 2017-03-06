@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import facturacion.Llamada;
 
 public class OperacionesLlamadas {
-	private HashMap<Character , LinkedList<Llamada>> llamadas;
+	private HashMap<String , LinkedList<Llamada>> llamadas;
 	
 	
 	public OperacionesLlamadas() {
@@ -14,7 +14,7 @@ public class OperacionesLlamadas {
 		
 	}
 
-	public void altaLlamada(char NIF,Llamada llamada){
+	public void altaLlamada(String NIF,Llamada llamada){
 		if (!llamadas.containsKey(NIF)) {
 			llamadas.put(NIF, new LinkedList<>());
 			

@@ -3,6 +3,9 @@ package facturacion;
 public class Tarifa {
 	private float precioTarifa;
 	
+	public Tarifa(){
+		
+	}
 	public Tarifa(float precioTarifa){
 		this.precioTarifa = precioTarifa;
 	}
