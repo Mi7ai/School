@@ -1,9 +1,10 @@
 package tipoClientes;
 import java.time.LocalDateTime;
 
+import facturacion.Fecha;
 import facturacion.Tarifa;
 
-public abstract class Cliente {
+public abstract class Cliente implements Fecha{
 	private String nombre;	
 	private String NIF;	
 	private String correo;
@@ -36,8 +37,8 @@ public abstract class Cliente {
 	public String getCorreo() {
 		return correo;
 	}
-
-	public LocalDateTime getFechaAlta() {
+	@Override
+	public LocalDateTime getFecha() {
 		return fechaAlta;
 	}
 
@@ -52,6 +53,6 @@ public abstract class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [getNombre()=" + getNombre() + ", getNIF()=" + getNIF() + ", getCorreo()=" + getCorreo()
-				+ ", getFechaAlta()=" + getFechaAlta() + ", getTarifa()=" + getTarifa() + "]";
+				+ ", getFechaAlta()=" + getFecha() + ", getTarifa()=" + getTarifa() + "]";
 	}
 }
