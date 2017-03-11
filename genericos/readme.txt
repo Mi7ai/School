@@ -1,1 +1,2 @@
-
+#mi7ai 
+Funcion generica que a partir de 3 atributos devuelve una estructura de datos...
