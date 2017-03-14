@@ -17,10 +17,6 @@ public class ListadoAPartirDeFechas {
 			}			
 		}
 		return nuevoConjunto;
-		
-		 
-		
-
 	}
 
 }
