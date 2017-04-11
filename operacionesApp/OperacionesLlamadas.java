@@ -1,5 +1,6 @@
 package operacionesApp;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -10,8 +11,7 @@ public class OperacionesLlamadas {
 	
 	
 	public OperacionesLlamadas() {
-		llamadas = new HashMap<>();
-		
+		llamadas = new HashMap<>();	
 	}
 
 	public void altaLlamada(String NIF,Llamada llamada){
@@ -23,7 +23,7 @@ public class OperacionesLlamadas {
 		
 	}
 	
-	public LinkedList<Llamada> listarLlamada(String NIF){
+	public Collection<Llamada> listarLlamada(String NIF){
 		return llamadas.get(NIF);//devuelve la lista de llamadas al corespondiente nif
 	}
 }

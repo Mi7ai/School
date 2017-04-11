@@ -1,11 +1,14 @@
 package operacionesApp;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import facturacion.Factura;
 import facturacion.Llamada;
+import facturacion.PeriodoFacturacion;
 import tipoClientes.Cliente;
 
 public class OperacionesFacturas {
@@ -17,14 +20,16 @@ public class OperacionesFacturas {
 		generadorCodigoFacturas = 2;
 	}
 
-	public Factura emitirFactura(Cliente cliente, OperacionesLlamadas llamadas, Factura factura ){
+	public Factura emitirFactura(Cliente cliente, Collection llamadas, PeriodoFacturacion periodoFacturacion  ){
 		//recorrer cada llamada
 		float importe = 0;
-		for (Llamada llamada : llamadas.listarLlamada(cliente.getNIF())) {
-			 importe += llamada.getDuracion()*cliente.getTarifa().getPrecioMinuto();
+		for (Iterator<Llamada> iterator =  llamadas.iterator(); iterator.hasNext();) {
+			Llamada llamada = iterator.next();
+			importe += llamada.getDuracion()*cliente.getTarifa().getPrecioMinuto();
 		}
 		
-		Factura nuevaFactura = new Factura(generadorCodigoFacturas+2, factura.getTarifa(), factura.getFecha(), factura.getPeriodoFacturacion(), importe);
+		
+		Factura nuevaFactura = new Factura(generadorCodigoFacturas+2, cliente.getTarifa(), LocalDateTime.now(), periodoFacturacion, importe);
 		
 		if (!facturas.containsKey(cliente.getNIF())) {
 			facturas.put(cliente.getNIF(), new HashMap<>());
