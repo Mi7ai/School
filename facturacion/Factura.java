@@ -6,13 +6,13 @@ public class Factura implements Fecha{
 	private Tarifa tarifa;
 	private int codigoFactura;
 	private LocalDateTime fechaEmision;
-	private LocalDateTime periodoFacturacion;
+	private PeriodoFacturacion periodoFacturacion;
 	private float importe;
 	
 	public Factura(){
 		
 	}
-	public Factura(int codigoFactura,Tarifa tarifa, LocalDateTime fechaEmision, LocalDateTime periodoFacturacion,float importe) {
+	public Factura(int codigoFactura,Tarifa tarifa, LocalDateTime fechaEmision, PeriodoFacturacion periodoFacturacion,float importe) {
 		super();
 		this.tarifa = tarifa;
 		this.codigoFactura = codigoFactura;
@@ -21,12 +21,8 @@ public class Factura implements Fecha{
 		this.importe = importe;
 	}
 
-	public LocalDateTime getPeriodoFacturacion() {
+	public PeriodoFacturacion getPeriodoFacturacion() {
 		return periodoFacturacion;
-	}
-
-	public void setPeriodoFacturacion(LocalDateTime periodoFacturacion) {
-		this.periodoFacturacion = periodoFacturacion;
 	}
 
 	public Tarifa getTarifa() {
