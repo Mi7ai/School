@@ -1,6 +1,9 @@
 package menu;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -9,6 +12,7 @@ import java.util.Scanner;
 
 import facturacion.Factura;
 import facturacion.Llamada;
+import facturacion.PeriodoFacturacion;
 import facturacion.Tarifa;
 import operacionesApp.OperacionesClienteEmpresa;
 import operacionesApp.OperacionesClienteParticular;
@@ -19,7 +23,13 @@ import tipoClientes.Direccion;
 import tipoClientes.Empresa;
 import tipoClientes.Particular;
 
-public class Menu {
+public class Menu  {
+
+	 
+	public static Scanner scanGeneral() {
+		 Scanner sc = new Scanner(System.in);
+		 return sc;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -29,32 +39,42 @@ public class Menu {
 		OperacionesClienteParticular clienteParticular = new OperacionesClienteParticular();
 		OperacionesLlamadas clienteLlamadas = new OperacionesLlamadas();
 		OperacionesFacturas clienteFacturas = new OperacionesFacturas();
-		
+		EnumMenuIntro menuIntro;
+		EnumMenuCliente menuCliente = null;
+		EnumMenuFacturas menuFactura = null;
 		
 		do {				
 		System.out.println("Elige una opcion: ");
-		System.out.println("1 --> Operacion Clientes");
-		System.out.println("2 --> Operacion Facturas");
-		System.out.println("3 --> Operacion Llamada");
-		System.out.println("0 --> Salir");
-		option1 = sc.nextInt();
+		
+
+ //		System.out.println("1 --> Operacion Clientes");
+//		System.out.println("2 --> Operacion Facturas");
+//		System.out.println("3 --> Operacion Llamada");
+//		System.out.println("0 --> Salir");
+		System.out.println(EnumMenuIntro.getMenu());
+		menuIntro = EnumMenuIntro.getOpcion(scanGeneral().nextByte());
+		 
 		
 			
 				
-			switch (option1) {
-			case 1:
+			switch (menuIntro) {
+			
+			case Operacion_Clientes:
 				//clientes
 				System.out.println("----- MENU OPERACION CLIENTES -----: ");
-				System.out.println("1 -->: Alta Cliente");
-				System.out.println("2 -->: Baja Cliente");
-				System.out.println("3 -->: Cambiar Tarifa Cliente");
-				System.out.println("4 -->: Ver Datos Cliente");
-				System.out.println("5 -->: Listado Clientes");
-				System.out.println("0 -->: Salir");
-				option2 = sc.nextInt();
+//				System.out.println("1 -->: Alta Cliente");
+//				System.out.println("2 -->: Baja Cliente");
+//				System.out.println("3 -->: Cambiar Tarifa Cliente");
+//				System.out.println("4 -->: Ver Datos Cliente");
+//				System.out.println("5 -->: Listado Clientes");
+//				System.out.println("0 -->: Salir");
+				
+				System.out.println(menuCliente.getMenuCliente());
+				menuCliente = menuCliente.getOpcion(scanGeneral().nextByte());
 				 
-				switch (option2) {
-					case 1:
+				 
+				switch (menuCliente) {
+					case Alta_Cliente:
 						System.out.println("--- Alta Cliente ---");
 						System.out.println("---------------------------------------");
 						System.out.println("1 ---> Alta Cliente: - Cliente Particular - ");
@@ -71,7 +91,7 @@ public class Menu {
 								break;
 							}
 						break;
-					case 2:
+					case Baja_Cliente:
 						System.out.println("--- Baja Cliente ---");
 						System.out.println("---------------------------------------");
 						System.out.println("1 --> Cliente Particular ");
@@ -88,7 +108,7 @@ public class Menu {
 								break;
 							}
 						break;
-					case 3:
+					case Cambiar_Tarifa_Cliente:
 						System.out.println("--- Cambio Tarifa ---");
 						System.out.println("---------------------------------------");
 						System.out.println("1 --> Cliente Particular ");
@@ -105,7 +125,7 @@ public class Menu {
 								break;
 							}
 						break;
-					case 4:
+					case Ver_Datos_Cliente:
 						System.out.println(" --- Datos Cliente ---");
 						System.out.println("1 --> Cliente Particular ");
 						System.out.println("2 --> Cliente Empresa ");
@@ -121,7 +141,7 @@ public class Menu {
 								break;
 							}
 						break;
-					case 5:
+					case Listado_Clientes:
 						System.out.println("--- Listado Clientes ---");
 						System.out.println("1 --> Cliente Particular ");
 						System.out.println("2 --> Cliente Empresa ");
@@ -143,38 +163,45 @@ public class Menu {
 								break;
 							}
 						break;
-					
+					 
 					default:
 						
 						break;
 					}
-				if (option2 == 0) {
+				 if (menuCliente != menuCliente.Salir) {
 					break;
 				}
-			case 2:
+			case Operacion_Facturas:
 					//facturas
 					System.out.println("----- MENU OPERACION FACTURAS -----: ");
-					System.out.println("1 -->: Emitir Factura");
-					System.out.println("2 -->: Recuperar Datos Factura");
-					System.out.println("3 -->: Recuperar Facturas Cliente");
-					System.out.println("0 -->: Salir");
-					option2 = sc.nextInt();
-					switch (option2) {
-						case 1:
+//					System.out.println("1 -->: Emitir Factura");
+//					System.out.println("2 -->: Recuperar Datos Factura");
+//					System.out.println("3 -->: Recuperar Facturas Cliente");
+//					System.out.println("0 -->: Salir");
+					System.out.println(menuFactura.getMenuFactura());
+					menuFactura = menuFactura.getOpcion(scanGeneral().nextByte());
+					switch (menuFactura) {
+						case Emitir_Factura:
 							System.out.println("--- Emision Factura ---");
 							if (detectarTipoCliente(clienteParticular, clienteEmpresa) == 1) {//particular
-								
+								Cliente c = crearCliente(1);
+								Collection<Llamada> llamadas = clienteLlamadas.listarLlamada(c.getNIF());
+								clienteFacturas.getDatosFacturas();
+								//clienteFacturas.emitirFactura(c, llamadas, new PeriodoFacturacion(clienteLlamadas.);
 							}else if (detectarTipoCliente(clienteParticular, clienteEmpresa) == 2) {//empresa
 								
 							}else{
 								System.out.println("Cliente inexistente!");
 							}
 							break;
-						case 2:
+						case Cambiar_Tarifa_Cliente:
+							
+							break;
+						case Recuperar_Datos_Factura:
 							System.out.println("--- Recuperando Datos Factura a partir de su Codigo ---");
 							clienteFacturas.getDatosFactura(crearCodigoFactura());
 							break;
-						case 3:
+						case Recuperar_Facturas_Cliente:
 							System.out.println("--- Recuperando Facturas Cliente ---");							 
 							for ( Factura factura : clienteFacturas.getFacturasCliente(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)))) {
 								 System.out.println(factura+"\n");
@@ -185,10 +212,10 @@ public class Menu {
 							  	
 							break;
 					}
-					if (option2 == 0) {
+					if (menuFactura != menuFactura.Salir) {
 						break;
 					}
-			case 3:
+			case Operacion_Llamada:
 				//llamadas
 				System.out.println("----- MENU OPERACION FACTURAS -----: ");
 				System.out.println("1 -->: Alta Llamada");
@@ -202,7 +229,7 @@ public class Menu {
 						break;
 					case 2:
 						System.out.println("--- Lista Llamada ---");//devuelve linkedlist
-						LinkedList<Llamada> l =  clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
+						LinkedList<Llamada> l =  (LinkedList<Llamada>) clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
 						System.out.println(l.size());
 						for (Llamada llamada : l) {
 							System.out.println(llamada.toString());
@@ -220,7 +247,7 @@ public class Menu {
 			default:
 				break;
 			}//switch option1
-		} while (option1 != 0);
+		} while (menuIntro != menuIntro.Salir);
 		
 		 
 	}
@@ -283,8 +310,12 @@ public class Menu {
         int duracion = sc.nextInt();
         
         LocalDateTime fecha = LocalDateTime.now();
-        return new Llamada(telefono, fecha, duracion);
-		 
+        return new Llamada(telefono, fecha, duracion);		 
+	}
+	private static LocalDateTime formatoFecha(){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
+		System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+		return null;
 	}
 }
