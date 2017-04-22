@@ -14,7 +14,8 @@ public enum EnumMenuCliente {
 	Baja_Cliente("Baja Cliente."), //2
 	Cambiar_Tarifa_Cliente("Cambiar Tarifa Cliente."), //3
 	Ver_Datos_Cliente("Ver Datos Cliente."), //4
-	Listado_Clientes("Listado Clientes."); //5
+	Listado_Clientes("Listado Clientes."), //5
+	Listado_Clientes_Entre_2_Fechas("Listado Clientes entre dos fechas.");
 	
 	private String descripcion;
 

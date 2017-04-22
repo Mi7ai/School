@@ -1,8 +1,13 @@
 package facturacion;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Factura implements Fecha{
+public class Factura implements Fecha, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7095540914452127725L;
 	private Tarifa tarifa;
 	private int codigoFactura;
 	private LocalDateTime fechaEmision;

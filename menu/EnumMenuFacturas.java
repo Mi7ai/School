@@ -5,7 +5,8 @@ public enum EnumMenuFacturas {
 	Emitir_Factura("Emitir Factura."), //1
 	Recuperar_Datos_Factura("Recuperar Datos Factura."), //2
 	Cambiar_Tarifa_Cliente("Cambiar Tarifa Cliente"), //3
-	Recuperar_Facturas_Cliente("Recuperar Facturas Cliente"); //4
+	Recuperar_Facturas_Cliente("Recuperar Facturas Cliente"), //4
+	Listado_Facturas_Entre_2_Fechas("Listado Facturas Cliente entre dos fechas.");
 	 
 	
 	private String descripcion;

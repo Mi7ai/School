@@ -1,9 +1,14 @@
 package facturacion;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Llamada implements Fecha{
+public class Llamada implements Fecha, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -268634845588826002L;
 	private int nrTelefono;
 	private LocalDateTime fecha;
 	private int duracion;

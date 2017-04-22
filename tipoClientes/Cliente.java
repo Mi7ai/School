@@ -3,8 +3,11 @@ import java.time.LocalDateTime;
 
 import facturacion.Fecha;
 import facturacion.Tarifa;
+import genericos.ListadoAPartirDeFecha;
 
-public abstract class Cliente implements Fecha{
+public abstract class Cliente {
+	
+
 	private String nombre;	
 	private String NIF;	
 	private String correo;
@@ -37,8 +40,8 @@ public abstract class Cliente implements Fecha{
 	public String getCorreo() {
 		return correo;
 	}
-	@Override
-	public LocalDateTime getFecha() {
+
+	public LocalDateTime getFechaAlta() {
 		return fechaAlta;
 	}
 
@@ -49,10 +52,10 @@ public abstract class Cliente implements Fecha{
 	public String getClienteNoExistente(){
 		return "No hay ningun cliente con el NIF proporcionado.";
 	}
-	
+	 
 	@Override
 	public String toString() {
 		return "Cliente [getNombre()=" + getNombre() + ", getNIF()=" + getNIF() + ", getCorreo()=" + getCorreo()
-				+ ", getFechaAlta()=" + getFecha() + ", getTarifa()=" + getTarifa() + "]";
+				+ ", getFechaAlta()=" + getFechaAlta() + ", getTarifa()=" + getTarifa().getPrecioMinuto() + "]";
 	}
 }

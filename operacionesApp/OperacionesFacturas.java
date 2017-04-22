@@ -1,17 +1,25 @@
 package operacionesApp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import facturacion.Factura;
+import facturacion.Fecha;
 import facturacion.Llamada;
 import facturacion.PeriodoFacturacion;
+import genericos.ListadoAPartirDeFecha;
 import tipoClientes.Cliente;
 
-public class OperacionesFacturas {
+public class OperacionesFacturas implements ListadoAPartirDeFecha, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2104879305172022541L;
 	private HashMap<String, HashMap<Integer,Factura>> facturas; 
 	private int generadorCodigoFacturas;
 	
@@ -20,7 +28,7 @@ public class OperacionesFacturas {
 		generadorCodigoFacturas = 2;
 	}
 
-	public Factura emitirFactura(Cliente cliente, Collection llamadas, PeriodoFacturacion periodoFacturacion  ){
+	public Factura emitirFactura(Cliente cliente, Collection<Llamada> llamadas, PeriodoFacturacion periodoFacturacion  ){
 		//recorrer cada llamada
 		float importe = 0;
 		for (Iterator<Llamada> iterator =  llamadas.iterator(); iterator.hasNext();) {
@@ -57,5 +65,17 @@ public class OperacionesFacturas {
 	
 	public Collection<HashMap<Integer, Factura>> getDatosFacturas(){
 		return facturas.values();
+	}
+
+	@Override
+	public <T> Collection<? extends Fecha> listado(Collection<T> conjunto, LocalDateTime fechaInicio,LocalDateTime fechaFin) {
+		// TODO Auto-generated method stub
+		ArrayList<Fecha> nuevoConjunto =  new ArrayList<>();
+		for (Fecha f : nuevoConjunto) {//mostrar listado clientes entre 2 fechas
+			if (f.getFecha().isAfter(fechaInicio) && f.getFecha().isBefore(fechaFin) ) {
+				nuevoConjunto.add(f);
+			}			
+		}
+		return nuevoConjunto;
 	}
 }

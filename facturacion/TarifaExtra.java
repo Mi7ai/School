@@ -9,10 +9,11 @@ public abstract class TarifaExtra extends Tarifa{
 	}
 
 	@Override
-	public float getPrecioMinuto(Llamada llamada) {
+	public float getPrecioMinuto() {//improve
+		return 0;
 		// TODO Auto-generated method stub
 		//mirar si tienen complemento y sacar el minimo de la llamada dependiendo del complemente.
-		return super.getPrecioMinuto(llamada)  tarifa.getPrecioMinuto();
+		 
 	}
 
 	@Override

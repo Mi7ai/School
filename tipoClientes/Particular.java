@@ -1,10 +1,15 @@
 package tipoClientes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import facturacion.Tarifa;
 
-public class Particular extends Cliente{
+public class Particular extends Cliente implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1413410210868514123L;
 	private String apellido;
 	
 	public Particular() {

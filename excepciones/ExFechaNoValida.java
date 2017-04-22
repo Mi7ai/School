@@ -1,4 +1,4 @@
-package exceptiones;
+package excepciones;
 
 public class ExFechaNoValida extends Exception{
 	public ExFechaNoValida() {

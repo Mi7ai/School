@@ -3,7 +3,9 @@ package menu;
 public enum EnumMenuLlamadas {
 	Salir("Salir"), //0
 	Alta_Llamada("Alta Llamada."), //1
-	Lista_Llamada("Lista Llamada."); //2
+	Lista_Llamada("Lista Llamada."), //2
+	Listado_Llamadas_Entre_2_Fechas("Listado Llamadas Cliente entre dos fechas.");
+
 	 
 	private String descripcion;
 
