@@ -51,7 +51,11 @@ public class Factura implements Fecha, Serializable{
 	public float getImporte() {
 		return importe;
 	}
-
+	@Override
+	public String toString() {
+		return "Factura [tarifa=" + tarifa.getPrecioMinuto() + ", codigoFactura=" + codigoFactura + ", fechaEmision=" + fechaEmision
+				+ ", periodoFacturacion=" + periodoFacturacion.getFechaFin()+" : "+periodoFacturacion.getFechaFin() + ", importe=" + importe + "]";
+	}
 	
 	
 	
