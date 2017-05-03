@@ -6,8 +6,14 @@ improve exceptions...in progress
   
 improve data I/O...in progress
   
-improve design pattern Decorator
+improve design pattern Decorator...in progress
   
-improve design pattern Factory
+improve design pattern Factory...in progress
   
-improte test for both patterns
+improte test for both patterns...in progress
+
+View...in progress
+
+Controller...in progress
+
+Model...in progress
