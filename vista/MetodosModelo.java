@@ -1,5 +1,8 @@
 package vista;
 
-public interface MetodosModelo {
+import javax.swing.JPanel;
 
+public interface MetodosModelo {
+	 void setVistaCliente();
+ 
 }
