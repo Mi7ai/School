@@ -4,41 +4,31 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import controlador.MetodosVista;
  
 
 
 public class ImplementaVista implements vista.MetodosControlador, vista.MetodosModelo{
-	controlador.MetodosVista controlador; //interfaz del puto controlador joder. tiene que tener los metodos de esta clase en en la interfaz controlador joder
-	modelo.MetodosVista modelo; //interfaz del puto modelo joder. tiene que tener los metodos de esta clase en la interfaz modelo joder
+	private controlador.MetodosVista controlador; //interfaz del puto controlador joder. tiene que tener los metodos de esta clase en en la interfaz controlador joder
+	private modelo.MetodosVista modelo; //interfaz del puto modelo joder. tiene que tener los metodos de esta clase en la interfaz modelo joder
 	private JFrame ventana;
 	private Container contenedor; 
-	private JPanel jpEntrada;
-	private VistaCliente vistaCliente;
+ 	private VistaCliente vistaCliente;
  
 	 	
 	private void GUI() {
 		ventana = new JFrame("Empresa Corg SL");
         contenedor = ventana.getContentPane();
-        jpEntrada = new JPanel();
-//        JPanel jpContador = new JPanel();
-         
-        Escuchador escuchador = new Escuchador();
+ 
+        JTabbedPane pestanas = new JTabbedPane();
+        pestanas.add("Clientes", new VistaCliente().GUI());
+        pestanas.add("Facturas", new JPanel());
+        pestanas.add("Llamadas",new JPanel());
+        contenedor.add(pestanas);
         
-        JButton jopClientes = new JButton("Clientes");
-        jopClientes.addActionListener(escuchador);
-//        JButton jbAtras = new JButton("Atras");
-//        jbAtras.addActionListener(escuchador);
-//        JButton jbAdelante = new JButton("Adelante");
-//        jbAdelante.addActionListener(escuchador);
-         
-        jpEntrada.add(jopClientes);
-//        jpEntrada.add(jbAtras);
-//        jpEntrada.add(jbAdelante);
-//        jpContador.add(jlContador);
-        contenedor.add(jpEntrada, BorderLayout.NORTH);
-//        contenedor.add(jpContador, BorderLayout.SOUTH);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.pack();
+        ventana.setSize(400, 400);;
         ventana.setVisible(true);
     }
 	
@@ -59,36 +49,16 @@ public class ImplementaVista implements vista.MetodosControlador, vista.MetodosM
         }
     }
 //------------------------------------------------------------------- 
-	
-	public void setControlador(controlador.MetodosVista controlador) {
-		this.controlador = controlador;
-	}
-
-	public void setModelo(modelo.MetodosVista modelo) {
-		this.modelo = modelo;
-	}
-	//-------------------------------------------------------------------
-
-	public void setJpEntrada(JPanel jpEntrada) {
-		this.jpEntrada = jpEntrada;
-	}
-
-	@Override
-	public void setVistaCliente() {
-		 vistaCliente = new VistaCliente();
-		setJpEntrada(vistaCliente.GUI());	
-		vistaCliente.creaGUI();
-	}
-
-	public JPanel getJpEntrada() {
-		return jpEntrada;
-	}
-	
-    //quitar del frame el panel y poner otro
  
- 
- 
- 
+	 public void setModelo(modelo.MetodosVista modelo) {
+	        this.modelo = modelo;
+	    }
+
+	    public void setControlador(MetodosVista controlador) {
+	        this.controlador = controlador;
+	}
+//------------------------------------------------------------------- 
+
 	 
 	
 	 

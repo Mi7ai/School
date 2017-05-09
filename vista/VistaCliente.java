@@ -1,62 +1,35 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import vista.ImplementaVista.Escuchador;
 
 public class VistaCliente implements vista.MetodosControlador, vista.MetodosModelo{
 	
 	public JPanel GUI() {
-//        JFrame ventana = new JFrame("Empresa Corg SL");
-//        Container contenedor = ventana.getContentPane();
-        JPanel jpEntrada = new JPanel();       
-//        Escuchador escuchador = new Escuchador();
+        JPanel panel = new JPanel();       
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JButton anadirCliente = new JButton("Añadir Cliente");
+        JButton borrarCliente = new JButton("Borrar Cliente");
+        JButton tarifaCliente = new JButton("Cambiar Tarifa ");         
+        JButton datosCliente = new JButton("Datos Cliente");
+        JButton listadoCliente = new JButton("Listado Clientes");
+        JButton salir = new JButton("Salir");
         
-        JButton addCliente = new JButton("Añadir Cliente");
-       // addCliente.addActionListener(escuchador);
-//        JButton jbAtras = new JButton("Atras");
-//        jbAtras.addActionListener(escuchador);
-//        JButton jbAdelante = new JButton("Adelante");
-//        jbAdelante.addActionListener(escuchador);
-         
-        jpEntrada.add(addCliente);
-//        jpEntrada.add(jbAtras);
-//        jpEntrada.add(jbAdelante);
-//        jpContador.add(jlContador);
-//        contenedor.add(jpEntrada, BorderLayout.NORTH);
-//        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        ventana.pack();
-//        ventana.setVisible(true);
-        return jpEntrada;
+        panel.add(anadirCliente);
+        panel.add(borrarCliente);
+        panel.add(tarifaCliente);
+        panel.add(datosCliente);
+        panel.add(listadoCliente);
+        panel.add(salir);
+ 
+        return panel;
     }
-
  
-
-	@Override
-	public void setVistaCliente() {
-		// TODO Auto-generated method stub
-		
-	}
- 
- 
-	
-	 public void creaGUI() {
-	    	SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					new JFrame().getContentPane().add(GUI());
-				}
-			});
-	    }
 //	    class Escuchador implements ActionListener {
 //	        public void actionPerformed(ActionEvent e) {
 //	            JButton boton = (JButton)e.getSource();
