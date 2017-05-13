@@ -28,7 +28,9 @@ public class ImplementaVista implements vista.MetodosControlador, vista.MetodosM
         contenedor.add(pestanas);
         
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setSize(400, 400);;
+        //ventana.setSize(400, 400);;
+        ventana.pack();
+        
         ventana.setVisible(true);
     }
 	
@@ -40,12 +42,12 @@ public class ImplementaVista implements vista.MetodosControlador, vista.MetodosM
 			}
 		});
     }
-    class Escuchador implements ActionListener {
+    class EscuchadorAnadirCliente implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JButton boton = (JButton)e.getSource();
             String texto = boton.getText();
-            if(texto.equals("Clientes"))
-                controlador.cambiarVistaClientes(); 
+            if(texto.equals("Añadir Cliente"))
+             	 controlador.cambiarVistaClientes(); 
         }
     }
 //------------------------------------------------------------------- 
