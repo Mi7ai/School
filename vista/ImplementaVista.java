@@ -9,7 +9,7 @@ import controlador.MetodosVista;
  
 
 
-public class ImplementaVista implements vista.MetodosControlador, vista.MetodosModelo{
+public class ImplementaVista   {
 	private controlador.MetodosVista controlador; //interfaz del puto controlador joder. tiene que tener los metodos de esta clase en en la interfaz controlador joder
 	private modelo.MetodosVista modelo; //interfaz del puto modelo joder. tiene que tener los metodos de esta clase en la interfaz modelo joder
 	private JFrame ventana;
@@ -17,6 +17,10 @@ public class ImplementaVista implements vista.MetodosControlador, vista.MetodosM
  	private VistaCliente vistaCliente;
  
 	 	
+	public void setVistaCliente(VistaCliente vistaCliente) {
+		this.vistaCliente = vistaCliente;
+	}
+
 	private void GUI() {
 		ventana = new JFrame("Empresa Corg SL");
         contenedor = ventana.getContentPane();
@@ -47,7 +51,7 @@ public class ImplementaVista implements vista.MetodosControlador, vista.MetodosM
             JButton boton = (JButton)e.getSource();
             String texto = boton.getText();
             if(texto.equals("Añadir Cliente"))
-             	 controlador.cambiarVistaClientes(); 
+             	 controlador.anadirCliente(); 
         }
     }
 //------------------------------------------------------------------- 
@@ -56,12 +60,12 @@ public class ImplementaVista implements vista.MetodosControlador, vista.MetodosM
 	        this.modelo = modelo;
 	    }
 
-	    public void setControlador(MetodosVista controlador) {
+	    public void setControlador(controlador.MetodosVista controlador) {
 	        this.controlador = controlador;
 	}
 //------------------------------------------------------------------- 
 
-	 
+		 
 	
 	 
 
