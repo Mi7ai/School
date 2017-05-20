@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -15,40 +17,62 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import excepciones.ExClienteNoExistente;
+import tipoClientes.Particular;
 
 public class VistaCliente implements vista.MetodosControlador, vista.MetodosModelo, FocusListener{
 	private controlador.MetodosVista controlador; //interfaz del puto controlador joder. tiene que tener los metodos de esta clase en en la interfaz controlador joder
 	private modelo.MetodosVista modelo; //interfaz del puto modelo joder. tiene que tener los metodos de esta clase en la interfaz modelo joder
 	private JLabel nombre,apellido,dni,email,tarifa,direccion,cp;
 	private JTextField jtNombre,jtApellido,jtDni,jtEmail,jtTarifa,jtCP;
+	private JComboBox<String> comboProvincias;
+ 	JRadioButton particular;
+ 	JButton anadirCliente;
+	private JTextArea jtArea;
 	public JPanel GUI() {
         JPanel panel = new JPanel(); 
         JPanel panelDatos = new JPanel();
         JPanel panelBotones = new JPanel();
         JPanel panelBotonesClientes = new JPanel();
         JPanel panelDireccion = new JPanel();
-        
+        JPanel panelArea = new JPanel();
+
         ButtonGroup tipoClientes = new ButtonGroup();
         String[] provincias = new String[] {"Castellon", "Valencia", "Patagonia", "Narnia", "Mordor"};
         
         // create a combo box with the fixed array:
-        JComboBox<String> comboProvincias = new JComboBox<String>(provincias);
+        comboProvincias = new JComboBox<String>(provincias);
         
          
         
         panel.setLayout(new BorderLayout());
-        panelDatos.setLayout(new GridLayout(8, 2, 50, 5));
+        panelDatos.setLayout(new GridLayout(8, 2, 5, 5));
         panelBotonesClientes.setLayout(new GridLayout(1, 2));
         
-        JButton anadirCliente = new JButton("Añadir Cliente");
+         anadirCliente = new JButton("Añadir Cliente");
+        //anadirCliente.addActionListener(new anadirClienteAC());
+        anadirCliente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				 controlador.anadirCliente();
+
+			}
+		});
+        
         JButton borrarCliente = new JButton("Borrar Cliente");
         JButton tarifaCliente = new JButton("Cambiar Tarifa ");
         tarifaCliente.addActionListener(new tarifaClienteAC());
 
         JButton datosCliente = new JButton("Datos Cliente");
+        datosCliente.addActionListener(new datosClienteAC());
+
         JButton listadoCliente = new JButton("Listado Clientes");
         JButton salir = new JButton("Salir");
         
@@ -96,7 +120,7 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
         panel.add(panelDatos, BorderLayout.WEST);
    
         
-        JRadioButton particular = new JRadioButton("Particular");
+        particular = new JRadioButton("Particular");
         
         JRadioButton empresa = new JRadioButton("Empresa");
         empresa.addChangeListener(new ChangeListener() {
@@ -121,10 +145,26 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
         panelBotonesClientes.add(empresa, 1);//añado botones a un panel
         
         panel.add(panelBotonesClientes, BorderLayout.EAST);
-        
-         return panel;
+        //---JTextArea
+        jtArea = new JTextArea(20,75);
+        jtArea.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelArea.add(jtArea);
+        panel.add(panelArea, BorderLayout.SOUTH);
+        //---JTextArea
+        return panel;
     }
 
+
+  private class anadirClienteAC implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// coger los datos de los campos
+		 controlador.anadirCliente();
+
+	}
+	  
+  }
 	private class tarifaClienteAC implements ActionListener{
 		
 		@Override
@@ -146,20 +186,20 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
  
 	}
 	
+	private class  datosClienteAC implements ActionListener{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+ 			try {
+				jtArea.setText(modelo.getDatosCliente(getDni()).toString());
+			} catch (ExClienteNoExistente e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public void focusGained(FocusEvent e) {
@@ -174,82 +214,62 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
 	}
 
 	@Override
-	public void getNombre() {
+	public String getNombre() {
+		// TODO Auto-generated method stub
+		return 	jtNombre.getText();
+
+	}
+
+	@Override
+	public String getApellido() {
+		return 	jtApellido.getText();
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void getApellido() {
+	public String getDni() {
+		// TODO Auto-generated method stub
+		return 	jtDni.getText();
+
+	}
+
+	@Override
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return 	jtEmail.getText();
+	
+	}
+
+	@Override
+	public String getTarifa() {
+		return jtTarifa.getText();
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void getDni() {
-		// TODO Auto-generated method stub
-		
-	}
+	 
 
 	@Override
-	public void getEmail() {
+	public String getCp() {
 		// TODO Auto-generated method stub
-		
+		return 	jtCP.getText();
+
+	}
+	
+	@Override
+	public Object getProvincia() {
+		// TODO Auto-generated method stub
+		return comboProvincias.getSelectedItem();
+	}
+	
+	@Override
+	public Object getPoblacion() {
+		// TODO Auto-generated method stub
+		return comboProvincias.getSelectedItem();
 	}
 
-	@Override
-	public void getTarifa() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getDireccion() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getCp() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getJtNombre() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getJtApellido() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getJtDni() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getJtEmail() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getJtTarifa() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getJtCP() {
-		// TODO Auto-generated method stub
-		
-	}
+	 
 	//------------------------------------------------------------------- 
 	 
 		 public void setModelo(modelo.MetodosVista modelo) {
@@ -260,7 +280,15 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
 		        this.controlador = controlador;
 		}
 	//------------------------------------------------------------------- 
-	 
+
+			@Override
+			public boolean jbParticular() {
+				// TODO Auto-generated method stub
+				return particular.isSelected();//true si esta sleccionado 
+			}
+
+		
+		
 	
 //	    class Escuchador implements ActionListener {
 //	        public void actionPerformed(ActionEvent e) {

@@ -4,30 +4,25 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public interface MetodosControlador {
-	public void getNombre();
+	public String getNombre();
 
-	public void getApellido();
+	public String getApellido();
 
-	public void getDni();
+	public String getDni();
 
-	public void getEmail();
+	public String getEmail();
 
-	public void getTarifa();
+	public String getTarifa();
 
-	public void getDireccion();
+	//public String getDireccion();
 
-	public void getCp();
-
-	public void getJtNombre();
-
-	public void getJtApellido();
-
-	public void getJtDni();
-
-	public void getJtEmail();
-
-	public void getJtTarifa();	
-
-	public void getJtCP();
+	public String getCp();
+	
+	public Object getProvincia();
+	
+	public Object getPoblacion();
+	
+	public boolean jbParticular();
+	 
 
 }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public enum EnumMenuIntro {
 	Salir("Salir"), //0
-	Cargar_Datos("Cargar datos."),//1
+	//Cargar_Datos("Cargar datos."),//1
 	Operacion_Clientes("Operacion Clientes."), //2
 	Operacion_Facturas("Operacion Facturas."), //3
 	Operacion_Llamada("Operacion Llamada"), //4

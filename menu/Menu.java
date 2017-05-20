@@ -19,11 +19,13 @@ import java.util.ListIterator;
 import java.util.Scanner;
 
 import excepciones.ExClienteNoExistente;
+import excepciones.ExClienteSinLlamadas;
 import facturacion.Factura;
 import facturacion.Fecha;
 import facturacion.Llamada;
 import facturacion.PeriodoFacturacion;
 import facturacion.Tarifa;
+import facturacion.TarifaBasica;
 import operacionesApp.OperacionesClienteEmpresa;
 import operacionesApp.OperacionesClienteParticular;
 import operacionesApp.OperacionesFacturas;
@@ -66,39 +68,40 @@ public class Menu implements Serializable {
 		System.out.println(EnumMenuIntro.getMenu());
 		menuIntro = EnumMenuIntro.getOpcion(scanGeneral().nextByte());
 		 
-				
+		try {
+			FileInputStream fiParticulares = new FileInputStream("particulares.bin");
+			FileInputStream fiEmpresas = new FileInputStream("empresas.bin");
+			FileInputStream fiFacturas = new FileInputStream("facturas.bin");
+			FileInputStream fiLlamadas = new FileInputStream("llamadas.bin");
+			
+			ObjectInputStream oiParticulares  = new ObjectInputStream(fiParticulares);
+			ObjectInputStream oiEmpresas  = new ObjectInputStream(fiEmpresas);
+			ObjectInputStream oiFacturas= new ObjectInputStream(fiFacturas);
+			ObjectInputStream oiLlamadas  = new ObjectInputStream(fiLlamadas);
+			
+			clienteParticular = (OperacionesClienteParticular) oiParticulares.readObject();
+			clienteEmpresa = (OperacionesClienteEmpresa) oiEmpresas.readObject();
+			clienteFacturas = (OperacionesFacturas) oiFacturas.readObject();
+			clienteLlamadas = (OperacionesLlamadas) oiLlamadas.readObject();
+			
+			oiParticulares.close();
+			oiEmpresas.close();
+			oiFacturas.close();
+			oiLlamadas.close();
+			
+			System.out.println("Datos cargados correctamente...");
+		}catch (FileNotFoundException e) {
+			System.out.println(e);
+		}catch (IOException e) {
+			System.out.println(e);
+		} catch (ClassNotFoundException e) {
+			System.out.println(e);
+		}
+		
 			switch (menuIntro) {
-			case Cargar_Datos:
-				try {
-					FileInputStream fiParticulares = new FileInputStream("particulares.bin");
-					FileInputStream fiEmpresas = new FileInputStream("empresas.bin");
-					FileInputStream fiFacturas = new FileInputStream("facturas.bin");
-					FileInputStream fiLlamadas = new FileInputStream("llamadas.bin");
-					
-					ObjectInputStream oiParticulares  = new ObjectInputStream(fiParticulares);
-					ObjectInputStream oiEmpresas  = new ObjectInputStream(fiEmpresas);
-					ObjectInputStream oiFacturas= new ObjectInputStream(fiFacturas);
-					ObjectInputStream oiLlamadas  = new ObjectInputStream(fiLlamadas);
-					
-					clienteParticular = (OperacionesClienteParticular) oiParticulares.readObject();
-					clienteEmpresa = (OperacionesClienteEmpresa) oiEmpresas.readObject();
-					clienteFacturas = (OperacionesFacturas) oiFacturas.readObject();
-					clienteLlamadas = (OperacionesLlamadas) oiLlamadas.readObject();
-					
-					oiParticulares.close();
-					oiEmpresas.close();
-					oiFacturas.close();
-					oiLlamadas.close();
-					
-					System.out.println("Datos cargados correctamente...");
-				}catch (FileNotFoundException e) {
-					System.out.println(e);
-				}catch (IOException e) {
-					System.out.println(e);
-				} catch (ClassNotFoundException e) {
-					System.out.println(e);
-				}
-				break;
+//			case Cargar_Datos:
+//				
+//				break;
 			case Operacion_Clientes:
 				//clientes
 				System.out.println("----- MENU OPERACION CLIENTES -----: ");
@@ -201,18 +204,14 @@ public class Menu implements Serializable {
 							switch (option3) {
 							case 1:
 								for (Cliente particular : clienteParticular.getListadoClientes()) {
-									try {
+									 
 										System.out.println(particular);
-									} catch (NullPointerException e) {
-										// TODO: handle exception
-										e.getMessage();
-									}
-									
+
 								}
 								
 								break;
 							case 2:
-								for (Cliente empresa : clienteEmpresa.getListadoClientes()) {									 
+ 								for (Cliente empresa : clienteEmpresa.getListadoClientes()) {									 
 									System.out.println(empresa);
 								}
 								
@@ -228,7 +227,7 @@ public class Menu implements Serializable {
 						option3 = scanGeneral().nextInt();
 							switch (option3) {
 							case 1:
-								imprimirLista(clienteParticular.listado( clienteParticular.getListadoClientes() ,  formatoFecha(), formatoFecha()));							
+								imprimirLista(clienteParticular.listado(clienteParticular.getListadoClientes(), formatoFecha(), formatoFecha()));							
 								break;
 							case 2:
 								imprimirLista(clienteEmpresa.listado(clienteEmpresa.getListadoClientes(), formatoFecha(), formatoFecha()));						
@@ -259,16 +258,20 @@ public class Menu implements Serializable {
 						
 						case Emitir_Factura:
 							System.out.println("--- Emision Factura ---");
-							if (detectarTipoCliente(clienteParticular, clienteEmpresa) == 1) {//particular
-								Cliente c = crearCliente(1);
-								Collection<Llamada> llamadas = clienteLlamadas.listarLlamada(c.getNIF());
-								clienteFacturas.getDatosFacturas();
-								clienteFacturas.emitirFactura(c, llamadas, new PeriodoFacturacion(formatoFecha(),formatoFecha()));
-							}else if (detectarTipoCliente(clienteParticular, clienteEmpresa) == 2) {//empresa
-								
-							}else{
-								System.out.println("Cliente inexistente!");
+							 try {
+								 Cliente c = crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa));
+									Collection<Llamada> llamadas = clienteLlamadas.listarLlamada(c.getNIF());
+									//System.out.println(clienteFacturas.getDatosFacturas());
+									
+									System.out.println("Factura:" +clienteFacturas.emitirFactura(c, llamadas, new PeriodoFacturacion(formatoFecha(),formatoFecha())).getCodigoFactura()+" creada");
+								 
+									
+							} catch (ExClienteSinLlamadas e) {
+								// TODO: handle exception
+								e.getMessage();
 							}
+								
+							 
 							break;
 						case Cambiar_Tarifa_Cliente:
 							//completar 
@@ -308,18 +311,24 @@ public class Menu implements Serializable {
 						clienteLlamadas.altaLlamada(crearNIFCliente(), crearLlamada());
 						break;
 					case Lista_Llamada:
-						System.out.println("--- Lista Llamada ---");//devuelve linkedlist
-						LinkedList<Llamada> l =  (LinkedList<Llamada>) clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
-						System.out.println(l.size());
-						for (Llamada llamada : l) {
-							System.out.println(llamada.toString());
-						}
-						System.out.println(clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF()));
-						System.out.println(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
+							System.out.println("--- Lista Llamada ---");//devuelve linkedlist
+							LinkedList<Llamada> l;
+							try {
+								l = (LinkedList<Llamada>) clienteLlamadas.listarLlamada(crearCliente(detectarTipoCliente(clienteParticular, clienteEmpresa)).getNIF());
+								imprimirLista(l);				 
+							} catch (ExClienteSinLlamadas e) {
+								// TODO Auto-generated catch block
+									e.printStackTrace();
+							}
 						break;
 					case Listado_Llamadas_Entre_2_Fechas:
 							
-							imprimirLista(clienteLlamadas.listado(clienteLlamadas.listarLlamada(preguntarDNI()), formatoFecha(),formatoFecha()));
+					try {
+						imprimirLista(clienteLlamadas.listado(clienteLlamadas.listarLlamada(preguntarDNI()), formatoFecha(),formatoFecha()));
+					} catch (ExClienteSinLlamadas e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
 						break;
 					default:
@@ -330,7 +339,7 @@ public class Menu implements Serializable {
 				}
 			case Guardar_Datos:
 				try {
-					FileOutputStream foParticulares = new FileOutputStream("src/main/java/particulares.bin");
+					FileOutputStream foParticulares = new FileOutputStream("particulares.bin");
 					FileOutputStream foEmpresas = new FileOutputStream("empresas.bin");
 					FileOutputStream foFacturas = new FileOutputStream("facturas.bin");
 					FileOutputStream foLlamadas = new FileOutputStream("llamadas.bin");
@@ -339,23 +348,29 @@ public class Menu implements Serializable {
 					ObjectOutputStream ooEmpresas  = new ObjectOutputStream(foEmpresas);
 					ObjectOutputStream ooFacturas= new ObjectOutputStream(foFacturas);
 					ObjectOutputStream ooLlamadas  = new ObjectOutputStream(foLlamadas);
+					
+					
 					ooParticulares.writeObject(clienteParticular);
 					ooEmpresas.writeObject(clienteEmpresa);
 					ooFacturas.writeObject(clienteFacturas);
 					ooLlamadas.writeObject(clienteLlamadas);
+//					ooParticulares.flush();
+//					ooEmpresas.flush();
+//					ooFacturas.flush();
+//					ooLlamadas.flush();
 					 
 					ooParticulares.close();
 					ooEmpresas.close();
 					ooFacturas.close();
 					ooLlamadas.close();
 					
-				 
+					System.out.println("Escritura completada...!");
 				} catch (FileNotFoundException e) {
 					System.out.println(e);
 				}catch (IOException e) {
 					System.out.println(e);
 				}
-				System.out.println("Escritura completada...!");
+				
 				break;
 			default:
 				break;
@@ -369,12 +384,12 @@ public class Menu implements Serializable {
 	private static Cliente crearCliente(int tipo){
 		Cliente nuevoCliente;
 		if (tipo == 1) {
-			Tarifa nuevaTarifa = new Tarifa(2.3f);
+			Tarifa nuevaTarifa = new TarifaBasica(2.3f);
 			Direccion nuevaDireccion = new Direccion(12004, "Castellon", "Castellon");			 
 			 
 		   nuevoCliente = new Particular("Mihai","X9457019V", "email", LocalDateTime.now(), nuevaTarifa, nuevaDireccion, "Manea");			  
 		}else{
-			Tarifa nuevaTarifa = new Tarifa(2.5f);
+			Tarifa nuevaTarifa = new TarifaBasica(2.5f);
 			Direccion nuevaDireccion = new Direccion(12004, "Valencia", "Valencia");	
 			nuevoCliente = new Empresa("Mihai", "X9457019V", "email", LocalDateTime.now(), nuevaTarifa, nuevaDireccion);
 		}
@@ -430,13 +445,13 @@ public class Menu implements Serializable {
 	private static LocalDateTime formatoFecha(){
 //		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 //		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-		String str = "1986-04-08 12:30";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String str = "02-04-2017 12:30";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 		LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 		return dateTime;
 	}
 	private static void imprimirLista( Collection<?> col){
-        Iterator lista = col.iterator();
+        Iterator<?> lista = col.iterator();
         StringBuilder sb = new StringBuilder();
         while(lista.hasNext()){
             sb.append(lista.next());
