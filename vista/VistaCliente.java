@@ -56,11 +56,13 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
         
          anadirCliente = new JButton("Añadir Cliente");
         //anadirCliente.addActionListener(new anadirClienteAC());
+         System.out.println(anadirCliente.getText());
         anadirCliente.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				System.out.println(getNombre());
 				 controlador.anadirCliente();
 
 			}

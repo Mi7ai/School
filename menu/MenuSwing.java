@@ -2,31 +2,52 @@ package menu;
 
 import controlador.*;
 import modelo.*;
+import operacionesApp.OperacionesClienteEmpresa;
+import operacionesApp.OperacionesClienteParticular;
+import operacionesApp.OperacionesFacturas;
+import operacionesApp.OperacionesLlamadas;
 import vista.*;
 
 public class MenuSwing {
 
 	public static void main(String args[]) {
-		ImplementaControlador controlador = new ImplementaControlador();
-		
-		VistaCliente vistaClientes = new VistaCliente();
+ 		//---Vistas
+		VistaCliente vistaClientes = new VistaCliente(); 
 		//crear para facturas 
 		//crear para llamadas
+		//---Vistas
 		
-		ImplementaModelo modelo = new ImplementaModelo();
+		//---Modelos
+ 		OperacionesClienteParticular particular = new OperacionesClienteParticular();
+		OperacionesClienteEmpresa empresa = new OperacionesClienteEmpresa();
+		OperacionesFacturas facturas = new OperacionesFacturas();
+		OperacionesLlamadas llamadas = new OperacionesLlamadas();
+		//---Modelos
 		
+		//---Controladores
+
+		ImplementaControladorClientes controladorClientes = new ImplementaControladorClientes();
+		//crear para facturas
+		//crear para llamadas
+		//---Controladores		
 		
+		// a lo modelos su vista 
+		particular.setVista(vistaClientes);
+		empresa.setVista(vistaClientes);
+
+		//a cada controlador su vista y modelo
+		controladorClientes.setVista(vistaClientes);
+		controladorClientes.setModelo(particular);
+		controladorClientes.setModelo(empresa);
 		
-		modelo.setVista(vistaClientes);
-		
-		controlador.setVista(vistaClientes);
-		controlador.setModelo(modelo);
-		
-		vistaClientes.setModelo(modelo);
-		vistaClientes.setControlador(controlador);
+		//a cada vista ponemos controlador y modelo
+		vistaClientes.setModelo(particular);
+		vistaClientes.setModelo(empresa);
+		vistaClientes.setControlador(controladorClientes);
+		vistaClientes.setControlador(controladorClientes);
 		 
 
-		ImplementaVista v = new ImplementaVista();
+		ImplementaVistaClientes v = new ImplementaVistaClientes();
 
 		v.creaGUI();
 
