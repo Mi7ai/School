@@ -9,9 +9,15 @@ import java.util.HashMap;
 import excepciones.ExClienteNoExistente;
 import facturacion.Fecha;
 import genericos.ListadoAPartirDeFecha;
+import modelo.MetodosControlador;
+import modelo.MetodosVista;
 import tipoClientes.Cliente;
 
-public class OperacionesClienteParticular implements InterfaceClientes, ListadoAPartirDeFecha, Serializable  {
+public class OperacionesClienteParticular implements InterfaceClientes, ListadoAPartirDeFecha, Serializable, vista.MetodosModelo, MetodosControlador, MetodosVista  {
+	vista.MetodosModelo vista;
+	public void setVista(vista.MetodosModelo vista) {
+		 this.vista = vista;		
+	}
 	/**
 	 * 
 	 */
@@ -75,15 +81,24 @@ public class OperacionesClienteParticular implements InterfaceClientes, ListadoA
 	}
 	@Override
 	public <T> Collection<? extends Fecha> listado(Collection<T> conjunto, LocalDateTime fechaInicio,LocalDateTime fechaFin) {
-		// TODO Auto-generated method stub
-		
-		ArrayList<Fecha> nuevoConjunto =  new ArrayList<>();//mejorar como compara las fechas
-		for (Fecha f : nuevoConjunto) {//mostrar listado clientes entre 2 fechas
-			if (f.getFecha().isAfter(fechaInicio) && f.getFecha().isBefore(fechaFin) ) {
-				nuevoConjunto.add(f);
+ 		ArrayList<Fecha> nuevoConjunto =  new ArrayList<>();
+ 		
+		for (T f : conjunto) {//mostrar listado clientes entre 2 fechas
+			if (((Fecha) f).getFecha().isAfter(fechaInicio) && ((Fecha) f).getFecha().isBefore(fechaFin) ) {
+				nuevoConjunto.add((Fecha) f);
 			}			
 		}
 		return nuevoConjunto;
+	}
+	@Override
+	public void anadirClienteParticular(Cliente particular) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void anadirClienteEmpresa(Cliente empresa) {
+		// TODO Auto-generated method stub
+		
 	}
 	 
 

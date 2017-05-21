@@ -1,9 +1,8 @@
 package modelo;
 
-import javax.swing.JPanel;
-
-import vista.VistaCliente;
+import tipoClientes.Cliente;
 
 public interface MetodosControlador {
-	void addVistaCliente();
-}
+	public void anadirClienteParticular(Cliente particular);
+	public void anadirClienteEmpresa(Cliente empresa);
+ }

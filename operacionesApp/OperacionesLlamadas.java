@@ -7,11 +7,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import excepciones.ExClienteSinLlamadas;
 import facturacion.Fecha;
 import facturacion.Llamada;
 import genericos.ListadoAPartirDeFecha;
 
-public class OperacionesLlamadas implements ListadoAPartirDeFecha, Serializable{
+public class OperacionesLlamadas implements ListadoAPartirDeFecha, Serializable,vista.MetodosModelo{
+	vista.MetodosModelo vista;
+	public void setVista(vista.MetodosModelo vista) {
+		 this.vista = vista;		
+	}
 	/**
 	 * 
 	 */
@@ -32,17 +37,21 @@ public class OperacionesLlamadas implements ListadoAPartirDeFecha, Serializable{
 		
 	}
 	
-	public Collection<Llamada> listarLlamada(String NIF){
+	public Collection<Llamada> listarLlamada(String NIF) throws ExClienteSinLlamadas{
+		if (!llamadas.containsKey(NIF) || NIF =="Null") {
+			throw new ExClienteSinLlamadas();
+		}
 		return llamadas.get(NIF);//devuelve la lista de llamadas al corespondiente nif
+		
 	}
 
 	@Override
 	public <T> Collection<? extends Fecha> listado(Collection<T> conjunto, LocalDateTime fechaInicio,LocalDateTime fechaFin) {
-		// TODO Auto-generated method stub
-		ArrayList<Fecha> nuevoConjunto =  new ArrayList<>();//mejorar como compara las fechas
-		for (Fecha f : nuevoConjunto) {//mostrar listado clientes entre 2 fechas
-			if (f.getFecha().isAfter(fechaInicio) && f.getFecha().isBefore(fechaFin) ) {
-				nuevoConjunto.add(f);
+		ArrayList<Fecha> nuevoConjunto =  new ArrayList<>();
+ 		
+		for (T f : conjunto) {//mostrar listado clientes entre 2 fechas
+			if (((Fecha) f).getFecha().isAfter(fechaInicio) && ((Fecha) f).getFecha().isBefore(fechaFin) ) {
+				nuevoConjunto.add((Fecha) f);
 			}			
 		}
 		return nuevoConjunto;

@@ -1,4 +1,4 @@
-package practica1;
+package test;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package practica1;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import facturacion.Tarifa;
+import facturacion.TarifaBasica;
 import tipoClientes.Cliente;
 import tipoClientes.Direccion;
 import tipoClientes.Particular;
@@ -20,7 +21,7 @@ public class ClienteTest {
 
 	@BeforeClass
 	public static void init() {
-		nuevaTarifa = new Tarifa(2.3f);
+		nuevaTarifa = new TarifaBasica(2.3f);
 		nuevaDireccion = new Direccion(12004, "Castellon", "Castellon");
 		nuevoCliente = new Particular("Mihai", "X9457019V", "email", LocalDateTime.now(), nuevaTarifa, nuevaDireccion,"Manea");
 	}

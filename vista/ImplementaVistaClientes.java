@@ -27,7 +27,7 @@ public class ImplementaVistaClientes   {
  
         JTabbedPane pestanas = new JTabbedPane();
         pestanas.add("Clientes", new VistaCliente().GUI());
-        pestanas.add("Facturas", new JPanel());
+        pestanas.add("Facturas", new VistaFacturas().GUI());
         pestanas.add("Llamadas",new JPanel());
         contenedor.add(pestanas);
         

@@ -1,11 +1,10 @@
 package tipoClientes;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import facturacion.Tarifa;
 
-public class Empresa extends Cliente implements Serializable{
+public class Empresa extends Cliente {
 
 	/**
 	 * 

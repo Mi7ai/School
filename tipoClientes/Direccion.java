@@ -1,6 +1,12 @@
 package tipoClientes;
 
-public class Direccion {
+import java.io.Serializable;
+
+public class Direccion implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6165479321209761202L;
 	private int CP;
 	private String provincia;
 	private String poblacion;

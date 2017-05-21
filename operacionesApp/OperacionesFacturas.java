@@ -12,10 +12,16 @@ import facturacion.Factura;
 import facturacion.Fecha;
 import facturacion.Llamada;
 import facturacion.PeriodoFacturacion;
+import facturacion.Tarifa;
+import facturacion.TarifaTardes;
 import genericos.ListadoAPartirDeFecha;
 import tipoClientes.Cliente;
 
-public class OperacionesFacturas implements ListadoAPartirDeFecha, Serializable {
+public class OperacionesFacturas implements ListadoAPartirDeFecha, Serializable, vista.MetodosModelo {
+	vista.MetodosModelo vista;
+	public void setVista(vista.MetodosModelo vista) {
+		 this.vista = vista;		
+	}
 	/**
 	 * 
 	 */
@@ -33,6 +39,7 @@ public class OperacionesFacturas implements ListadoAPartirDeFecha, Serializable 
 		float importe = 0;
 		for (Iterator<Llamada> iterator =  llamadas.iterator(); iterator.hasNext();) {
 			Llamada llamada = iterator.next();
+			
 			importe += llamada.getDuracion()*cliente.getTarifa().getPrecioMinuto();
 		}
 		
@@ -69,11 +76,11 @@ public class OperacionesFacturas implements ListadoAPartirDeFecha, Serializable 
 
 	@Override
 	public <T> Collection<? extends Fecha> listado(Collection<T> conjunto, LocalDateTime fechaInicio,LocalDateTime fechaFin) {
-		// TODO Auto-generated method stub
 		ArrayList<Fecha> nuevoConjunto =  new ArrayList<>();
-		for (Fecha f : nuevoConjunto) {//mostrar listado clientes entre 2 fechas
-			if (f.getFecha().isAfter(fechaInicio) && f.getFecha().isBefore(fechaFin) ) {
-				nuevoConjunto.add(f);
+ 		
+		for (T f : conjunto) {//mostrar listado clientes entre 2 fechas
+			if (((Fecha) f).getFecha().isAfter(fechaInicio) && ((Fecha) f).getFecha().isBefore(fechaFin) ) {
+				nuevoConjunto.add((Fecha) f);
 			}			
 		}
 		return nuevoConjunto;

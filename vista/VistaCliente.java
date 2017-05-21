@@ -76,15 +76,13 @@ public class VistaCliente implements vista.MetodosControlador, vista.MetodosMode
         datosCliente.addActionListener(new datosClienteAC());
 
         JButton listadoCliente = new JButton("Listado Clientes");
-        JButton salir = new JButton("Salir");
-        
+         
         panelBotones.add(anadirCliente );
         panelBotones.add(borrarCliente);
         panelBotones.add(tarifaCliente);
         panelBotones.add(datosCliente);
         panelBotones.add(listadoCliente); 
-        panelBotones.add(salir);
-        panel.add(panelBotones, BorderLayout.NORTH);
+         panel.add(panelBotones, BorderLayout.NORTH);
         
         nombre = new JLabel("Nombre");
         panelDatos.add(nombre,0);

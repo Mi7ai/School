@@ -1,13 +1,18 @@
 package tipoClientes;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import facturacion.Fecha;
 import facturacion.Tarifa;
 import genericos.ListadoAPartirDeFecha;
 
-public abstract class Cliente {
+public abstract class Cliente implements Serializable{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7183352456291061555L;
 	private String nombre;	
 	private String NIF;	
 	private String correo;
